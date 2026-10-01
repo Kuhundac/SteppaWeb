@@ -6,6 +6,13 @@ namespace SteppaWeb.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly SteppaDbContext _context;
+
+        public HomeController(SteppaDbContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
             return View();
@@ -13,7 +20,8 @@ namespace SteppaWeb.Controllers
 
         public IActionResult Products()
         {
-            return View();
+            var products = _context.Products.ToList();
+            return View(products);
         }
 
         public IActionResult Privacy()

@@ -1,7 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using SteppaWeb.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<SteppaDbContext>(options =>
+    options.UseSqlite("Data Source=steppa.db"));
 
 var app = builder.Build();
 
