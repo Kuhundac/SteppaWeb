@@ -1,0 +1,28 @@
+﻿<h1>STEPPA Products (Live via API)</h1>
+
+<table class="table" id="productsTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Color</th>
+            <th>Price</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody id="productsBody">
+    </tbody>
+</table>
+
+<script>
+        fetch('/api/productsapi')
+            .then(response => response.json())
+            .then(products => {
+                const tbody = document.getElementById('productsBody');
+                products.forEach(p => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${p.name}</td><td>${p.color}</td><td>${p.price}</td><td>${p.stockQuantity}</td>`;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching products:', error));
+</script>
