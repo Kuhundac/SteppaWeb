@@ -34,5 +34,49 @@ namespace SteppaWeb.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        [HttpGet]
+        public IActionResult CreateProduct()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateProduct(Product product)
+        {
+            _context.Products.Add(product);
+            _context.SaveChanges();
+            return RedirectToAction("Products");
+        }
+
+        [HttpGet]
+        public IActionResult EditProduct(int id)
+        {
+            var product = _context.Products.Find(id);
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult EditProduct(Product product)
+        {
+            _context.Products.Update(product);
+            _context.SaveChanges();
+            return RedirectToAction("Products");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteProduct(int id)
+        {
+            var product = _context.Products.Find(id);
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProduct(Product product)
+        {
+            var productToDelete = _context.Products.Find(product.ProductId);
+            _context.Products.Remove(productToDelete);
+            _context.SaveChanges();
+            return RedirectToAction("Products");
+        }
     }
 }

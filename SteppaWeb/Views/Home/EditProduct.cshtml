@@ -1,0 +1,24 @@
+﻿@model SteppaWeb.Models.Product
+
+<h1>Edit Product</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="ProductId" />
+    <div>
+        <label>Name</label>
+        <input asp-for="Name" />
+    </div>
+    <div>
+        <label>Color</label>
+        <input asp-for="Color" />
+    </div>
+    <div>
+        <label>Price</label>
+        <input asp-for="Price" />
+    </div>
+    <div>
+        <label>Stock Quantity</label>
+        <input asp-for="StockQuantity" />
+    </div>
+    <button type="submit">Save Changes</button>
+</form>
