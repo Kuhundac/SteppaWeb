@@ -43,6 +43,11 @@ namespace SteppaWeb.Controllers
         [HttpPost]
         public IActionResult CreateProduct(Product product)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(product);
+            }
+
             _context.Products.Add(product);
             _context.SaveChanges();
             return RedirectToAction("Products");
@@ -58,6 +63,11 @@ namespace SteppaWeb.Controllers
         [HttpPost]
         public IActionResult EditProduct(Product product)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(product);
+            }
+
             _context.Products.Update(product);
             _context.SaveChanges();
             return RedirectToAction("Products");

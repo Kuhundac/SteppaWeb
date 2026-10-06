@@ -7,18 +7,26 @@
     <div>
         <label>Name</label>
         <input asp-for="Name" />
+        <span asp-validation-for="Name" style="color:red"></span>
     </div>
     <div>
         <label>Color</label>
         <input asp-for="Color" />
+        <span asp-validation-for="Color" style="color:red"></span>
     </div>
     <div>
         <label>Price</label>
         <input asp-for="Price" />
+        <span asp-validation-for="Price" style="color:red"></span>
     </div>
     <div>
         <label>Stock Quantity</label>
         <input asp-for="StockQuantity" />
+        <span asp-validation-for="StockQuantity" style="color:red"></span>
     </div>
     <button type="submit">Save Changes</button>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
