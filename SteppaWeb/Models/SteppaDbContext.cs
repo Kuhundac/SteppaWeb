@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace SteppaWeb.Models;
 
-public class SteppaDbContext : DbContext
+public class SteppaDbContext : IdentityDbContext
 {
     public SteppaDbContext(DbContextOptions<SteppaDbContext> options) : base(options)
     {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SteppaWeb.Models;
 
 namespace SteppaWeb.Controllers
@@ -32,6 +33,7 @@ namespace SteppaWeb.Controllers
             return Ok(product);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CreateProduct(Product product)
         {
@@ -40,6 +42,7 @@ namespace SteppaWeb.Controllers
             return Ok(product);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult UpdateProduct(int id, Product product)
         {
@@ -52,6 +55,7 @@ namespace SteppaWeb.Controllers
             return Ok(product);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct(int id)
         {

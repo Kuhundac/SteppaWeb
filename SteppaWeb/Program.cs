@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SteppaWeb.Models;
 
@@ -8,6 +9,25 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<SteppaDbContext>(options =>
     options.UseSqlite("Data Source=steppa.db"));
+
+// Identity: user storage, password hashing, sign-in logic
+builder.Services.AddIdentityCore<IdentityUser>(options =>
+{
+    options.Password.RequiredLength = 8;
+})
+    .AddEntityFrameworkStores<SteppaDbContext>()
+    .AddSignInManager();
+
+// Login cookie
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+    .AddIdentityCookies();
+
+// Where to send people who aren't logged in
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+});
 
 var app = builder.Build();
 
@@ -22,6 +42,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -30,6 +51,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

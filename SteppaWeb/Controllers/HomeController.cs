@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SteppaWeb.Models;
 using System.Diagnostics;
@@ -34,12 +35,15 @@ namespace SteppaWeb.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [Authorize]
         [HttpGet]
         public IActionResult CreateProduct()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CreateProduct(Product product)
         {
@@ -53,13 +57,19 @@ namespace SteppaWeb.Controllers
             return RedirectToAction("Products");
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult EditProduct(int id)
         {
             var product = _context.Products.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
             return View(product);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult EditProduct(Product product)
         {
@@ -73,17 +83,28 @@ namespace SteppaWeb.Controllers
             return RedirectToAction("Products");
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult DeleteProduct(int id)
         {
             var product = _context.Products.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
             return View(product);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult DeleteProduct(Product product)
         {
             var productToDelete = _context.Products.Find(product.ProductId);
+            if (productToDelete == null)
+            {
+                return NotFound();
+            }
+
             _context.Products.Remove(productToDelete);
             _context.SaveChanges();
             return RedirectToAction("Products");
