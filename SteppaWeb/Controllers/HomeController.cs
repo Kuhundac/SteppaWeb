@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SteppaWeb.Models;
 using System.Diagnostics;
 
@@ -19,10 +20,37 @@ namespace SteppaWeb.Controllers
             return View();
         }
 
-        public IActionResult Products()
+        public IActionResult Products(string? search, string? sort, bool lowStock = false)
         {
-            var products = _context.Products.ToList();
-            return View(products);
+            const int LowStockLimit = 20;
+
+            var query = _context.Products.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(p => EF.Functions.Like(p.Name, $"%{search}%")
+                                      || EF.Functions.Like(p.Color, $"%{search}%"));
+            }
+
+            if (lowStock)
+            {
+                query = query.Where(p => p.StockQuantity <= LowStockLimit);
+            }
+
+            query = sort switch
+            {
+                "name_desc" => query.OrderByDescending(p => p.Name),
+                "price" => query.OrderBy(p => p.Price),
+                "price_desc" => query.OrderByDescending(p => p.Price),
+                "stock" => query.OrderBy(p => p.StockQuantity),
+                "stock_desc" => query.OrderByDescending(p => p.StockQuantity),
+                _ => query.OrderBy(p => p.Name)
+            };
+
+            ViewData["Search"] = search;
+            ViewData["Sort"] = sort;
+            ViewData["LowStock"] = lowStock;
+            return View(query.ToList());
         }
 
         public IActionResult Privacy()
