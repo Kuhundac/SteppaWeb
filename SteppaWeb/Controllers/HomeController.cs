@@ -36,14 +36,14 @@ namespace SteppaWeb.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult CreateProduct()
         {
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CreateProduct(Product product)
         {
@@ -57,7 +57,7 @@ namespace SteppaWeb.Controllers
             return RedirectToAction("Products");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult EditProduct(int id)
         {
@@ -69,7 +69,7 @@ namespace SteppaWeb.Controllers
             return View(product);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult EditProduct(Product product)
         {
@@ -83,7 +83,7 @@ namespace SteppaWeb.Controllers
             return RedirectToAction("Products");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult DeleteProduct(int id)
         {
@@ -95,7 +95,7 @@ namespace SteppaWeb.Controllers
             return View(product);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult DeleteProduct(Product product)
         {

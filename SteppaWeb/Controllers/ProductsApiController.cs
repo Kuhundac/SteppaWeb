@@ -33,7 +33,7 @@ namespace SteppaWeb.Controllers
             return Ok(product);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CreateProduct(Product product)
         {
@@ -42,7 +42,7 @@ namespace SteppaWeb.Controllers
             return Ok(product);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public IActionResult UpdateProduct(int id, Product product)
         {
@@ -55,7 +55,7 @@ namespace SteppaWeb.Controllers
             return Ok(product);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct(int id)
         {
