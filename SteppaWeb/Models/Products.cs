@@ -7,9 +7,11 @@ public class Product
     public int ProductId { get; set; }
 
     [Required(ErrorMessage = "Please enter a sock name")]
+    [StringLength(100, ErrorMessage = "Name can't be longer than 100 characters")]
     public string Name { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Please enter a color")]
+    [StringLength(50, ErrorMessage = "Color can't be longer than 50 characters")]
     public string Color { get; set; } = string.Empty;
 
     [Range(0.01, 10000, ErrorMessage = "Price must be between 0.01 and 10,000")]
